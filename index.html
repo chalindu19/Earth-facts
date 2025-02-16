@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Earth Facts</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #fact {
+            width: 300px;
+            height: 100px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        #button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.2s;
+        }
+
+        #button:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="fact">Click the button to get a fact!</div>
+    <button id="button">Get a Fact</button>
+
+    <script>
+        let attempts = 0;
+        const facts = [
+            "Earth is the only planet known to support life.",
+            "About 71% of Earth's surface is covered by water.",
+            "Earth has one natural satellite, the Moon.",
+            "The highest point on Earth is Mount Everest, which stands at 8,848 meters (29,029 feet) above sea level.",
+            "Earth's rotation is gradually slowing down, making days longer over time.",
+            "The planet is approximately 4.5 billion years old.",
+            "Earth has a powerful magnetic field that protects it from solar winds.",
+            "The Amazon Rainforest produces more than 20% of the world's oxygen.",
+            "Earth's atmosphere is composed of 78% nitrogen and 21% oxygen.",
+            "The Great Barrier Reef is the largest living structure on Earth."
+        ];
+
+        const factElement = document.getElementById('fact');
+        const button = document.getElementById('button');
+
+        button.addEventListener('click', () => {
+            attempts++;
+            if (attempts < 3) {
+                alert(`You need ${3 - attempts} more attempts to display a fact.`);
+            } else {
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                factElement.textContent = facts[randomIndex];
+                attempts = 0; // Reset attempts after displaying a fact
+            }
+        });
+
+        // Move button when user approaches
+        document.addEventListener('mousemove', (event) => {
+            const buttonRect = button.getBoundingClientRect();
+            const distance = Math.sqrt(
+                Math.pow(event.clientX - (buttonRect.left + buttonRect.width / 2), 2) +
+                Math.pow(event.clientY - (buttonRect.top + buttonRect.height / 2), 2)
+            );
+
+            if (distance < 100) { // If mouse is within 100px of the button
+                button.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
