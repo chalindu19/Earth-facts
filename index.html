@@ -38,7 +38,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            transition: transform 0.2s;
+            transition: transform 0.2s ease-in-out;
         }
 
         #button:hover {
@@ -79,7 +79,7 @@
             }
         });
 
-        // Move button when user approaches
+        // Subtle button movement when user approaches
         document.addEventListener('mousemove', (event) => {
             const buttonRect = button.getBoundingClientRect();
             const distance = Math.sqrt(
@@ -88,7 +88,11 @@
             );
 
             if (distance < 100) { // If mouse is within 100px of the button
-                button.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`;
+                const offsetX = (Math.random() - 0.5) * 10; // Slight horizontal movement
+                const offsetY = (Math.random() - 0.5) * 10; // Slight vertical movement
+                button.style.transform = `translate(-50%, ${offsetY}px) translateX(${offsetX}px)`;
+            } else {
+                button.style.transform = 'translateX(-50%)'; // Reset to original position
             }
         });
     </script>
